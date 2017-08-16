@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CSS Transition Helper</title>
+    <style>
+      .ball {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: hotpink;
+      }
+
+      .grow {
+        width: 200px;
+        height: 200px;
+        background: lightblue;
+      }
+
+      .hide {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <button type="button" data-action="grow">Grow!</button>
+    <button type="button" data-action="hide">Hide!</button>
+    <button type="button" data-action="growThenHide">Grow! then Hide!</button>
+    <div class="ball"></div>
+
+    <script src="./transition.js"></script>
+    <script>
+      var ball = document.querySelector('.ball');
+      var grow = new Transition(ball, 'grow', 'width .5s ease-in-out .5s, height .7s, background-color 1s');
+      var hide = new Transition(ball, 'hide', 'all 1s ease-out');
+
+      document.querySelector('[data-action="grow"]').addEventListener('click', function () {
+        grow.toggle().then(function (transition) {
+          console.log('state: ' + transition.state);
+        }).catch(function (err) {
+          console.log(err);
+        });
+      });
+
+      document.querySelector('[data-action="hide"]').addEventListener('click', function () {
+        // hide.toggle().then(function (transition) {
+        //   if (transition.state === 'done') {
+        //     transition.element.hidden = true;
+        //   }
+
+        //   console.log('state: ' + transition.state);
+        // }).catch(function (err) {
+        //   console.log(err);
+        // });
+        if (hide.state === 'done') {
+          if (hide.element.hidden) {
+            hide.element.hidden = false;
+          }
+          hide.reverse();
+        } else {
+          hide.start().then(function (transition) {
+            transition.element.hidden = true;
+          });
+        }
+      });
+
+      document.querySelector('[data-action="growThenHide"]').addEventListener('click', function () {
+        if (hide.element.hidden) {
+          hide.element.hidden = false;
+
+          hide.reverse().then(function () {
+            grow.reverse();
+          });
+        } else {
+          grow.start().then(function () {
+            return hide.start();
+          }).then(function (transition) {
+            transition.element.hidden = true;
+          });
+        }
+      });
+    </script>
+  </body>
+
+</html>
