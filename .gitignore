@@ -1,0 +1,19 @@
+# Source Code
+src/
+
+# Config files
+.babelrc
+.editorconfig
+.eslint*
+webpack.config.js
+
+# Node.js
+node_modules/
+npm-debug.log
+package.json
+
+# Yarn
+yarn.lock
+
+# VS Code
+.vscode
