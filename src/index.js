@@ -226,12 +226,18 @@ export default class Transition {
    * @static
    * @param {HTMLElement} element
    * @param {string} className
-   * @param {string} transition
+   * @param {string} [transitionShorthand='all 0 ease 0']
+   * @param {boolean} [keepTransition]
    * @returns {Promise<Transition>}
    * @memberof Transition
    */
-  static start(element, className, transition) {
-    const t = new Transition(element, className, transition);
+  static start(element, className, transitionShorthand, keepTransition) {
+    const t = new Transition(
+      element,
+      className,
+      transitionShorthand,
+      keepTransition
+    );
     return t.start();
   }
 }

@@ -70,38 +70,11 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-// @see https://github.com/Financial-Times/polyfill-service/tree/master/polyfills/Date/now
-if (!('Date' in window && 'now' in Date && 'getTime' in Date.prototype)) {
-  Date.now = function () {
-    return new Date().getTime();
-  };
-}
-
-// @see https://github.com/Financial-Times/polyfill-service/tree/master/polyfills/performance/now
-if (!('performance' in window)) {
-  window.performance = {};
-}
-
-if (!('now' in performance)) {
-  var startTime = Date.now();
-
-  performance.now = function () {
-    return Date.now() - startTime;
-  };
-}
-
-/***/ }),
-/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -172,14 +145,14 @@ var TRANSITION_NAMES = function () {
 exports.default = TRANSITION_NAMES;
 
 /***/ }),
-/* 2 */
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(3);
+module.exports = __webpack_require__(2);
 
 
 /***/ }),
-/* 3 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -191,13 +164,13 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-__webpack_require__(4);
+__webpack_require__(3);
 
 var _getTimeFrame = __webpack_require__(5);
 
 var _getTimeFrame2 = _interopRequireDefault(_getTimeFrame);
 
-var _transitionNames = __webpack_require__(1);
+var _transitionNames = __webpack_require__(0);
 
 var _transitionNames2 = _interopRequireDefault(_transitionNames);
 
@@ -457,15 +430,16 @@ var Transition = function () {
      * @static
      * @param {HTMLElement} element
      * @param {string} className
-     * @param {string} transition
+     * @param {string} [transitionShorthand='all 0 ease 0']
+     * @param {boolean} [keepTransition]
      * @returns {Promise<Transition>}
      * @memberof Transition
      */
 
   }], [{
     key: 'start',
-    value: function start(element, className, transition) {
-      var t = new Transition(element, className, transition);
+    value: function start(element, className, transitionShorthand, keepTransition) {
+      var t = new Transition(element, className, transitionShorthand, keepTransition);
       return t.start();
     }
   }]);
@@ -476,13 +450,13 @@ var Transition = function () {
 exports.default = Transition;
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-__webpack_require__(0);
+__webpack_require__(4);
 
 // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
 // http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
@@ -528,6 +502,33 @@ if (!window.cancelAnimationFrame) {
 }
 
 /***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// @see https://github.com/Financial-Times/polyfill-service/tree/master/polyfills/Date/now
+if (!('Date' in window && 'now' in Date && 'getTime' in Date.prototype)) {
+  Date.now = function () {
+    return new Date().getTime();
+  };
+}
+
+// @see https://github.com/Financial-Times/polyfill-service/tree/master/polyfills/performance/now
+if (!('performance' in window)) {
+  window.performance = {};
+}
+
+if (!('now' in performance)) {
+  var startTime = Date.now();
+
+  performance.now = function () {
+    return Date.now() - startTime;
+  };
+}
+
+/***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -566,7 +567,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = splitTransitions;
 
-var _transitionNames = __webpack_require__(1);
+var _transitionNames = __webpack_require__(0);
 
 var _transitionNames2 = _interopRequireDefault(_transitionNames);
 
